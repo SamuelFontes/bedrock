@@ -1,0 +1,13 @@
+registers on cpu:
+	a - general programming use
+	x - general programming use | index register
+	y - general programming use | index register
+	pc
+	sp
+	sr
+
+memory: 64kb - ram, prg-rom(inside the cartrige) | 16-bit adressing
+
+how to learn what a new instruction do: figure out what data is being modified and how.
+
+when debugging the program start at the address 8000
