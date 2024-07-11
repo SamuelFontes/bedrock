@@ -105,27 +105,27 @@ enable_rendering:
   lda #%00010000	; Enable Sprites
   sta $2001
 
-forever:
-  jmp forever
+wait_for_ppu_response:
+  jmp wait_for_ppu_response ; This will halt the program and wait for the PPU to respond, I think
 
 nmi:
   ldx #$00 	; Set SPR-RAM address to 0
   stx $2003
-@loop:	lda hello, x 	; Load the hello message into SPR-RAM
+@loop:	
+  lda hello, x 	; Load the hello message into SPR-RAM
   sta $2004
   inx
   cpx #$1c
   bne @loop
   rti
 
-hello:
+hello: 
   .byte $00, $00, $00, $00 	; Why do I need these here?
   .byte $00, $00, $00, $00
   .byte $6c, $00, $00, $6c
   .byte $6c, $01, $00, $76
   .byte $6c, $02, $00, $80
-  .byte $6c, $02, $00, $8A
-  .byte $6c, $03, $00, $94
+  .byte $6c, $03, $00, $8A
 
 palettes:
   ; Background Palette
@@ -141,43 +141,44 @@ palettes:
   .byte $0f, $00, $00, $00
 
 ; Character memory
+; THIS DEFFINES THE DATA FORMAT
 .segment "CHARS"
-  .byte %11000011	; H (00)
-  .byte %11000011
-  .byte %11000011
+  .byte %11111111	; H (00)
+  .byte %10000000
+  .byte %10000000
   .byte %11111111
+  .byte %00000001
+  .byte %00000001
+  .byte %00000001
   .byte %11111111
-  .byte %11000011
-  .byte %11000011
-  .byte %11000011
   .byte $00, $00, $00, $00, $00, $00, $00, $00
 
   .byte %11111111	; E (01)
+  .byte %10000001
+  .byte %10000001
+  .byte %10000001
   .byte %11111111
-  .byte %11000000
-  .byte %11111100
-  .byte %11111100
-  .byte %11000000
-  .byte %11111111
-  .byte %11111111
+  .byte %10000001
+  .byte %10000001
+  .byte %10000001
   .byte $00, $00, $00, $00, $00, $00, $00, $00
 
-  .byte %11000000	; L (02)
-  .byte %11000000
-  .byte %11000000
-  .byte %11000000
-  .byte %11000000
-  .byte %11000000
-  .byte %11111111
-  .byte %11111111
+  .byte %11000011	; L (02)
+  .byte %10100101
+  .byte %10011001
+  .byte %10000001
+  .byte %10000001
+  .byte %10000001
+  .byte %10000001
+  .byte %10000001
   .byte $00, $00, $00, $00, $00, $00, $00, $00
 
-  .byte %01111110	; O (03)
-  .byte %11100111
-  .byte %11000011
-  .byte %11000011
-  .byte %11000011
-  .byte %11000011
-  .byte %11100111
-  .byte %01111110
+  .byte %10000001	; O (03)
+  .byte %10000001
+  .byte %10000001
+  .byte %10000001
+  .byte %10000001
+  .byte %10000001
+  .byte %10000001
+  .byte %11111111
   .byte $00, $00, $00, $00, $00, $00, $00, $00
