@@ -1,7 +1,11 @@
 .proc mine
- ; Start by loading the value 5 into both the X and Y registers
-  ldx #5
+  ; Start by loading the value 5 into both the X and Y registers
+
+  ldx #10
   ldy #5
+
+  stx $00 ; copy x value to address
+  stx $01
 
   ; Increment the value of X twice
   inx
@@ -80,8 +84,10 @@ vblankwait2:
 
 
 main:
+  lda #1
+  jsr mine
 load_palettes:
-  lda $2002
+  lda $2002 ; PPU_STATUS
   lda #$3f
   sta $2006
   lda #$00

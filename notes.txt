@@ -11,3 +11,8 @@ memory: 64kb - ram, prg-rom(inside the cartrige) | 16-bit adressing
 how to learn what a new instruction do: figure out what data is being modified and how.
 
 when debugging the program start at the address 8000
+
+# value
+$ address?
+
+$2002 = PPU_STATUS
